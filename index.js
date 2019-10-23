@@ -32,6 +32,16 @@ const student2 = {
 }
 */
 
+
+
+
+
+
+
+
+
+
+/*
 var studentsList = [];  // tworzy pustą tablicę gdzie będziemy wrzucać studentów
 
 var Person = {
@@ -77,6 +87,9 @@ student9.setData('Siwy', 'Warszawa', 14593, 'student')
 var student10 = Object.create(Person);
 student10.setData('Mateusz', 'Gdansk', 14594, 'student')
 
+
+
+
 // dodaje wszystkcih studentów do pustej tablicy studentsList
 
 
@@ -96,6 +109,147 @@ divDisplay.style.display = 'flex';  // dla diva o id display zmienia display na 
 divDisplay.style.flexDirection = 'column';  // wiadomo
 divDisplay.style.justifyContent = 'space-around';   // wiadomo
 divDisplay.style.height = '98vh';   // wiadomo
+
+divContent = document.querySelectorAll('.content')
+
+
+
+
+
+
+
+*/
+
+
+
+// CONSTRUCTOR FUNCTION 
+
+
+
+function Person(name, id, adress) {
+    this.name = name;
+    this.id = id;
+    this.adress = adress;
+}
+
+
+
+
+
+Person.prototype.drawEmoji = function () {
+    console.log('=D')
+}
+
+
+
+
+function Student(name, adress, id) {
+    Person.call(this, name, id, adress);
+    this.changeId = function (newId) {
+        this.studentIdNumber = newId;
+    };
+    this.profile = 'student'
+}
+
+
+
+
+
+function Teacher(name, adress) {
+    Person.call(this, name, null, adress);
+    this.profile = 'teacher'
+}
+
+
+
+
+
+Student.prototype = Object.create(Person.prototype);
+Student.prototype.constructor = Student;
+
+
+
+Teacher.prototype = Object.create(Person.prototype)
+Teacher.prototype.constructor = Teacher;
+
+
+
+
+var student1 = new Student('Michael', 'Warszawa', 123)
+var student2 = new Student('Johnny', 'Gdansk', 124)
+
+var teacher1 = new Teacher('Ewelina', 'Gdansk')
+var teacher2 = new Teacher('Marian', "Warszawa")
+
+
+
+
+// creating lists /arrays 
+
+var studentsList = [];
+studentsList.push(student1, student2)
+
+var teachersList = [];
+teachersList.push(teacher1, teacher2)
+
+
+// DOM
+
+
+divDisplay = document.getElementById('display') // grabs the div with display id
+
+var outputT = [];
+var outputS = [];
+
+let a = teachersList.map((x => outputT +=`<div class="teacher">${x.name} ${x.adress} ${x.profile}</div>`))
+let b = studentsList.map((x => outputS +=`<div class="student">${x.name} ${x.adress} ${x.profile} ${x.id}</div>`))
+
+let makeSectionT = document.createElement('section')
+let makeSectionS = document.createElement('section')
+
+divDisplay.appendChild(makeSectionT).classList.add('teacher')
+divDisplay.appendChild(makeSectionS).classList.add('student')
+
+document.getElementsByClassName('teacher')[0].innerHTML = outputT
+document.getElementsByClassName('student')[0].innerHTML = outputS
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+var studentsList = [
+    new Student('Karol', 'Gdansk', 8555),
+    new Student('Michal', 'Gdansk', 8556),
+    new Student('Jacek', 'Gdansk', 8557),
+    new Student('Tomasz', 'Gdansk', 8558)
+]
+
+
+
+function StudentsList(...studentsList) {
+    this.list = [];
+    this.AddToList = function (...studentsList) {
+        this.list.push(...studentsList)
+    }
+}
+
+
+StudentsList(studentsList);
+console.log(StudentsList(studentsList))
+
+
+
+
+*/
+
 
 
 
